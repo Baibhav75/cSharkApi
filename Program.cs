@@ -28,4 +28,6 @@ app.UseHttpsRedirection();
 // ✅ Map Controllers
 app.MapControllers();
 
-app.Run();
+// ✅ IMPORTANT for Render (Docker)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Run($"http://0.0.0.0:{port}");
