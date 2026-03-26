@@ -1,22 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using MyApiProject.Data;
+using MyApiProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Add DB (InMemory)
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("UserDb"));
+// ✅ MongoDB Service
+builder.Services.AddSingleton<MongoService>();
 
-// ✅ Add Controllers
+// ✅ Controllers
 builder.Services.AddControllers();
 
-// ✅ Swagger (OpenAPI)
+// ✅ Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ✅ Swagger enable
+// ✅ Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -25,9 +23,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// ✅ Map Controllers
 app.MapControllers();
 
-// ✅ IMPORTANT for Render (Docker)
+// ✅ Render port
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.Run($"http://0.0.0.0:{port}");
