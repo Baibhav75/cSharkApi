@@ -12,7 +12,7 @@ namespace MyApiProject.Services
             var client = new MongoClient(config["MongoDb:ConnectionString"]);
             var database = client.GetDatabase(config["MongoDb:DatabaseName"]);
 
-            _users = database.GetCollection<User>("Users");
+            _users = database.GetCollection<User>("users");
         }
 
         public List<User> GetAll() =>
